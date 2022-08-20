@@ -6,38 +6,41 @@ import { Context } from "../store/appContext";
 import "../../styles/demo.css";
 
 export const Demo = () => {
-	const { store, actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
 
-	return (
-		<div className="container">
-			<ul className="list-group">
-				{store.demo.map((item, index) => {
-					return (
-						<li
-							key={index}
-							className="list-group-item d-flex justify-content-between"
-							style={{ background: item.background }}>
-							<Link to={"/single/" + index}>
-								<span>Link to: {item.title}</span>
-							</Link>
-							{// Conditional render example
-							// Check to see if the background is orange, if so, display the message
-							item.background === "orange" ? (
-								<p style={{ color: item.initial }}>
-									Check store/flux.js scroll to the actions to see the code
-								</p>
-							) : null}
-							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
-								Change Color
-							</button>
-						</li>
-					);
-				})}
-			</ul>
-			<br />
-			<Link to="/">
-				<button className="btn btn-primary">Back home</button>
-			</Link>
-		</div>
-	);
+  return (
+    <div className="container">
+      <div className="row">
+        {store.gryffindor.map((e, i) => {
+          return (
+            <div className="col-md-3">
+              <div className="card mx-3 mt-5">
+                <img src={e.image} className="card-img-top" alt=""></img>
+                <div className="card-body">
+                  <h5 className="card-title">Name: {e.name}</h5>
+                  <p className="card-text">Gender: {e.gender}</p>
+                  <p className="card-text">Date of Birth: {e.dateOfBirth}</p>
+                  <Link to={`/demo/${i}`} className="btn btn-dark" key={i}>
+                      See more
+                  </Link>
+
+                  <button
+                    onClick={() => {
+                      actions.addFav(e.name);
+                    }}
+                    className="btn btn-dark m-2"
+                  >
+                    Favorite
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <Link to="/">
+        <button className="btn btn-dark m-3">Back home</button>
+      </Link>
+    </div>
+  );
 };
